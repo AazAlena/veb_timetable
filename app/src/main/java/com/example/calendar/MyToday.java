@@ -18,7 +18,7 @@ public class MyToday extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.today, container, false);
         TextView textView = v.findViewById(R.id.textView);
-        textView.setText(GlobalYear );
+        textView.setText(GlobalYear);
         return v;
     }
 }
