@@ -35,43 +35,43 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment f;
-                f = new MyCalendarOneDay();
+//                f = new MyCalendarOneDay();
+
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
                 if (view.getId() == R.id.btn1) {
                     f = new MyCalendarOneDay();
-                } else if (view.getId() == R.id.btn2) {
-                    final Calendar c = Calendar.getInstance();
-
-                    // on below line we are getting
-                    // our day, month and year.
-                    int year = c.get(Calendar.YEAR);
-                    int month = c.get(Calendar.MONTH);
-                    int day = c.get(Calendar.DAY_OF_MONTH);
-
-                    // on below line we are creating a variable for date picker dialog.
+                }
+                else if (view.getId() == R.id.btn2) {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(
-                            // on below line we are passing context.
+
                             MainActivity.this,
                             new DatePickerDialog.OnDateSetListener() {
+
                                 @Override
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
-                                    // on below line we are setting date to our text view.
-                                    Toast.makeText(MainActivity.this, (String)(year + " "+ monthOfYear), Toast.LENGTH_SHORT).show();
+
+                                    Toast.makeText(MainActivity.this, (String)(year + " "+ monthOfYear+" "+dayOfMonth), Toast.LENGTH_SHORT).show();
                                     GlobalYear = year;
                                     GlobalMonth = monthOfYear;
                                     GlobalDate = dayOfMonth;
                                 }
                             },
-                            // on below line we are passing year,
-                            // month and day for selected date in our date picker.
                             year, month, day);
-                    // at last we are calling show to
-                    // display our date picker dialog.
-                    datePickerDialog.show();
 
-                } else if (view.getId() == R.id.btn3){
+                    datePickerDialog.show();
                     f = new MyToday();
                 }
+                else if (view.getId() == R.id.btn3){
+                    f = new MyToday();
+                } else {
+                    f = new MyToday();
+                }
+
                 ft.add(R.id.frag, f);
                 ft.commit();
 
