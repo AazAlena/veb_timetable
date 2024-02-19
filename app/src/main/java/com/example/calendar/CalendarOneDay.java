@@ -19,7 +19,7 @@ public class CalendarOneDay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_one_day);
         Intent i = getIntent();//достаём посылку
-        str = i.getStringExtra("btn2"); //вынимаем btn2
+        str = i.getStringExtra("btn1"); //вынимаем btn2
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
         btn1_cal_one_day = findViewById(R.id.btn1_cal_one_day);

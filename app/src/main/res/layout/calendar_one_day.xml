@@ -60,7 +60,7 @@
         android:id="@+id/textView_cal_one_day"
         android:layout_width="78dp"
         android:layout_height="16dp"
-        android:text="this is today"
+        android:text="this is calndar one tay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
