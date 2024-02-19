@@ -18,10 +18,26 @@ public class CalendarOneDay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_one_day);
-//        btn1_cal_one_day = findViewById(R.id.btn1_cal_one_day);
-//        btn2_cal_one_day = findViewById(R.id.btn2_cal_one_day);
-//        btn3_cal_one_day = findViewById(R.id.btn3_cal_one_day);
-//        btn4_cal_one_day = findViewById(R.id.btn4_cal_one_day);
+        Intent i = getIntent();//достаём посылку
+        str = i.getStringExtra("btn2"); //вынимаем btn2
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+
+        btn1_cal_one_day = findViewById(R.id.btn1_cal_one_day);
+        btn2_cal_one_day = findViewById(R.id.btn2_cal_one_day);
+        btn3_cal_one_day = findViewById(R.id.btn3_cal_one_day);
+        btn4_cal_one_day = findViewById(R.id.btn4_cal_one_day);
+
+        View.OnClickListener listener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent();
+                i2.putExtra("result", "hello " + str);
+                setResult(0, i2);
+                finish();
+            }
+        };
+
+        btn1_cal_one_day.setOnClickListener(listener);
 //        Intent i = getIntent();//достаём посылку
 //        str = i.getStringExtra("username"); //вынимаем username
 //        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();

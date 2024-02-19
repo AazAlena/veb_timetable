@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,14 +37,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
+                String str = "mmmm".toString();
                 Intent i = new Intent(MainActivity.this, CalendarOneDay.class);
-                startActivity(i);
+                i.putExtra("btn2", str);
+                startActivityForResult(i, 0);
             }
         };
         btn1.setOnClickListener(listener);
         btn2.setOnClickListener(listener);
     }
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0 & requestCode == 0) {
+            String str = data.getStringExtra("result");
+            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
