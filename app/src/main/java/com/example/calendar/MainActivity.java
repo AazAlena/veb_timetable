@@ -37,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
-        View.OnClickListener listener = new View.OnClickListener() {
+        View.OnClickListener listener2 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = "mmmm".toString();
-                Intent i = new Intent(MainActivity.this, CalendarOneDay.class);
-                i.putExtra("btn1", str);
+                String str = (year + " " + month + " " + day).toString();
+                Intent i = new Intent(MainActivity.this, Today.class);
+                i.putExtra("btn2", str);
                 startActivityForResult(i, 0);
             }
         };
-        View.OnClickListener listener2 = new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Toast.makeText(MainActivity.this, (String) (year + " " + monthOfYear + " " + dayOfMonth), Toast.LENGTH_SHORT).show();
                         String str = (year + " " + monthOfYear + " " + dayOfMonth).toString();
-                        Intent i = new Intent(MainActivity.this, Today.class);
-                        i.putExtra("toToday", str);
+                        Intent i = new Intent(MainActivity.this, CalendarOneDay.class);
+                        i.putExtra("toCalendarOneDay", str);
                         startActivityForResult(i, 0);
                     }
                 }, year, month, day);
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Toast.makeText(MainActivity.this, (String) (year + " " + month + " " + day), Toast.LENGTH_SHORT).show();
-        btn1.setOnClickListener(listener); // перемещает между первой и второ активностью
-        btn2.setOnClickListener(listener2);//показывает календарь
+        btn2.setOnClickListener(listener); // перемещает между первой и today активностью
+        btn3.setOnClickListener(listener2); //показывает календарь и перемещает в активность calrndar_one_day
     };
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

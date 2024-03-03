@@ -18,7 +18,7 @@ public class Today extends AppCompatActivity {
         setContentView(R.layout.today);
 
         Intent i = getIntent();//достаём посылку
-        str = i.getStringExtra("toToday"); //вынимаем btn1
+        str = i.getStringExtra("btn2"); //вынимаем btn1
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
         btn1_today = findViewById(R.id.btn1_today);
@@ -36,7 +36,7 @@ public class Today extends AppCompatActivity {
             }
         };
 
-        btn2_today.setOnClickListener(listener);
+        btn1_today.setOnClickListener(listener);
 
 
 
