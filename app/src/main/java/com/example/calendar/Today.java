@@ -16,6 +16,7 @@ public class Today extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.today);
+
         Intent i = getIntent();//достаём посылку
         str = i.getStringExtra("toToday"); //вынимаем btn1
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
@@ -36,6 +37,10 @@ public class Today extends AppCompatActivity {
         };
 
         btn2_today.setOnClickListener(listener);
+
+
+
+
     }
 }
 

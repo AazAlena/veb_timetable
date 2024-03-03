@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1, btn2, btn3, btn4;
+    int year, month, day;
 
     String str;
 
@@ -30,16 +31,12 @@ public class MainActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
         btn4 = findViewById(R.id.btn4);
-        Toast.makeText(this, "Hellow", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
 
         Calendar c = Calendar.getInstance();
-//        int GlobalYear;
-//        int GlobalMonth;
-//        int GlobalDay;
-
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(listener); // перемещает между первой и второ активностью
         btn2.setOnClickListener(listener2);//показывает календарь
     };
-            @Override
-            protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-                super.onActivityResult(requestCode, resultCode, data);
-                if (resultCode == 0 & requestCode == 0) {
-                    String str = data.getStringExtra("result");
-                    Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-                }
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0 & requestCode == 0) {
+            String str = data.getStringExtra("result");
+            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         }
+    }
+}
 //
 //                if (view.getId() == R.id.btn1) {
 //                        f = new MyCalendarOneDay();
