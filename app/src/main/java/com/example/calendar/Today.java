@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +40,25 @@ public class Today extends AppCompatActivity {
         btn1_today.setOnClickListener(listener);
 
 
+        //АДАПТЕР
+        MyTodayAdapter adapter = new MyTodayAdapter(this, makeGoal());
+        ListView lv = (ListView) findViewById(R.id.lv_checklists);
+        lv.setAdapter(adapter);
 
+    }
 
+    Goal[] makeGoal() {
+        Goal[] arr = new Goal[6];
+
+        String[] goalArr = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"};
+
+        for (int i = 0; i < arr.length; i++) {
+            Goal goal = new Goal();
+            goal.name = goalArr[i];
+
+            arr[i] = goal;
+        }
+        return arr;
     }
 }
 
