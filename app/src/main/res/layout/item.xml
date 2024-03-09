@@ -11,12 +11,11 @@
     <!--    android:text="Месяц"-->
     <!--    android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
-
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Мне нравится этот месяц" />
+        android:text="" />
 
 </LinearLayout>
