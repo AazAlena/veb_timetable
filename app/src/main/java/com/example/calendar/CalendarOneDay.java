@@ -1,16 +1,21 @@
 package com.example.calendar;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class CalendarOneDay extends AppCompatActivity {
     Button btn1_cal_one_day, btn2_cal_one_day, btn3_cal_one_day, btn4_cal_one_day;
+    int year, month, day;
     String str;
     TextView textView_cal_one_day;
 
@@ -27,17 +32,57 @@ public class CalendarOneDay extends AppCompatActivity {
         btn3_cal_one_day = findViewById(R.id.btn3_cal_one_day);
         btn4_cal_one_day = findViewById(R.id.btn4_cal_one_day);
 
-        View.OnClickListener listener=new View.OnClickListener() {
+        Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+        View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i2 = new Intent();
-                i2.putExtra("result", "hello " + str);
-                setResult(0, i2);
-                finish();
+                Toast.makeText(CalendarOneDay.this, "Bingo!", Toast.LENGTH_SHORT).show();
+                String str = (year + " " + month + " " + day).toString();
+                Intent i = new Intent(CalendarOneDay.this, Today.class);
+                i.putExtra("btn2", str);
+                startActivityForResult(i, 0);
             }
         };
+        View.OnClickListener listener2 = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CalendarOneDay.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Toast.makeText(CalendarOneDay.this, (String) (year + " " + monthOfYear + " " + dayOfMonth), Toast.LENGTH_SHORT).show();
+                        String str = (year + " " + monthOfYear + " " + dayOfMonth).toString();
+                        Intent i = new Intent(CalendarOneDay.this, CalendarOneDay.class);
+                        i.putExtra("toCalendarOneDay", str);
+                        startActivityForResult(i, 0);
+                    }
+                }, year, month, day);
 
-        btn1_cal_one_day.setOnClickListener(listener);
+                datePickerDialog.show();
+            }
+        };
+        View.OnClickListener listener1 = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i2 = new Intent();
+//                i2.putExtra("result", "hello " + str);
+//                setResult(0, i2);
+//                finish();
+                String str = "return from Calrndar one day";
+                Intent i = new Intent(CalendarOneDay.this, MainActivity.class);
+                i.putExtra("btn1", str);
+                startActivityForResult(i, 0);
+            }
+        };
+        Toast.makeText(CalendarOneDay.this, (String) (year + " " + month + " " + day), Toast.LENGTH_SHORT).show();
+
+        btn1_cal_one_day.setOnClickListener(listener1);
+        btn2_cal_one_day.setOnClickListener(listener2); // перемещает между первой и today активностью
+        btn3_cal_one_day.setOnClickListener(listener3); //показывает календарь и перемещает в активность calrndar_one_day
+
+
 //        Intent i = getIntent();//достаём посылку
 //        str = i.getStringExtra("username"); //вынимаем username
 //        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();

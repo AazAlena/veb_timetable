@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        View.OnClickListener listener2 = new View.OnClickListener() {
+        View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         };
-        View.OnClickListener listener = new View.OnClickListener() {
+        View.OnClickListener listener2 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         Toast.makeText(MainActivity.this, (String) (year + " " + month + " " + day), Toast.LENGTH_SHORT).show();
-        btn2.setOnClickListener(listener); // перемещает между первой и today активностью
-        btn3.setOnClickListener(listener2); //показывает календарь и перемещает в активность calrndar_one_day
+        btn2.setOnClickListener(listener2); // перемещает между первой и today активностью
+        btn3.setOnClickListener(listener3); //показывает календарь и перемещает в активность calrndar_one_day
 
     };
     @Override
