@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
+
 public class MyTodayAdapter extends ArrayAdapter<Goal> {
-    public MyTodayAdapter(Context context, Goal[] arr) {
+    public MyTodayAdapter(Context context,  ArrayList<Goal> arr) {
         super(context, R.layout.item, arr);
     }
 

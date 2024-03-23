@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Today extends AppCompatActivity {
     ArrayList<String> goalArr;
     ArrayList<Boolean> goalChecked;
+    ArrayList<Goal> myGoals;
     ListView lv;
     MyTodayAdapter adapter;
     Button btn2_today, btn1_today, btn3_today, btn4_today;
@@ -70,7 +71,8 @@ public class Today extends AppCompatActivity {
 
 
         //АДАПТЕР_item_1,
-        adapter = new MyTodayAdapter(this, makeGoal(goalArr, goalChecked));
+        myGoals=makeGoal(goalArr, goalChecked);
+        adapter = new MyTodayAdapter(this, myGoals);
         lv = (ListView) findViewById(R.id.lv_checklists);
         lv.setAdapter(adapter);
 
@@ -79,15 +81,12 @@ public class Today extends AppCompatActivity {
             public void onClick(View v) {
                 String str = EditTextForNewGoal_today.getText().toString();
 //                Toast.makeText(Today.this, str, Toast.LENGTH_SHORT).show();
-//                Goal newGoal = new Goal();
-//                newGoal.did = false;
-//                newGoal.name = str;
-                goalArr.add(str);
-                goalChecked.add(false);
+                Goal newGoal = new Goal();
+                newGoal.did = false;
+                newGoal.name = str;
+
+                myGoals.add(newGoal);
                 adapter.notifyDataSetChanged();
-//                adapter = new MyTodayAdapter(Today.this, makeGoal(goalArr, goalChecked));
-//                lv.setAdapter(adapter);
-//oString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,15 +106,15 @@ public class Today extends AppCompatActivity {
 
     }
 
-    Goal[] makeGoal(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked) {
-        Goal[] arr = new Goal[goalArr.size()];
+    ArrayList<Goal> makeGoal(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked) {
+        ArrayList<Goal> arr = new ArrayList<>();
 
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < goalArr.size(); i++) {
             Goal goal = new Goal();
             goal.name = goalArr.get(i);
             goal.did = goalChecked.get(i);
 
-            arr[i] = goal;
+            arr.add(goal);
         }
         return arr;
     }
