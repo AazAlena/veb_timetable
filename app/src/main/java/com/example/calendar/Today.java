@@ -71,9 +71,9 @@ public class Today extends AppCompatActivity {
 
 
         //АДАПТЕР_item_1,
-        myGoals=makeGoal(goalArr, goalChecked);
+        myGoals = makeGoal(goalArr, goalChecked);
         adapter = new MyTodayAdapter(this, myGoals);
-        lv = (ListView) findViewById(R.id.lv_checklists);
+        lv = findViewById(R.id.lv_checklists);
         lv.setAdapter(adapter);
 
         ButtonAddGoal_today.setOnClickListener(new View.OnClickListener() {
@@ -90,20 +90,21 @@ public class Today extends AppCompatActivity {
             }
         });
 
-//        почему не работает следующая функция удаления?
+//        !!!!!!!!!!!!!!!!!!
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-                Toast.makeText(Today.this, "УДаляю", Toast.LENGTH_SHORT).show();
-                Goal str = adapter.getItem(i);
-                goalArr.remove(i);
-                goalChecked.remove(i);
-//                adapter.notifyDataSetChanged();
-                adapter = new MyTodayAdapter(Today.this, makeGoal(goalArr, goalChecked));
-                lv.setAdapter(adapter);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
             }
         });
-
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, final int i, long id) {
+//                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
+//                myGoals.remove(i);
+//                adapter.notifyDataSetChanged();
+//            };
+//        });
     }
 
     ArrayList<Goal> makeGoal(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked) {

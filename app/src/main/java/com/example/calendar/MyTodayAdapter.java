@@ -16,6 +16,7 @@ public class MyTodayAdapter extends ArrayAdapter<Goal> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+//        !!!!!!!!!!!!!!!!!!!
 
         final Goal goal = getItem(position);
 
