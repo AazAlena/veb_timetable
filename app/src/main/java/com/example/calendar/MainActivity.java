@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         settings = findViewById(R.id.btn1);
         calendar = findViewById(R.id.btn2);
         today = findViewById(R.id.btn3);
