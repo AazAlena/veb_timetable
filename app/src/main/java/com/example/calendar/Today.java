@@ -1,6 +1,7 @@
 package com.example.calendar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,18 +13,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class Today extends AppCompatActivity {
     ArrayList<String> goalArr;
     ArrayList<Boolean> goalChecked;
     ArrayList<Goal> myGoals;
+    Set<String> listGoalsForToday;
     ListView lv;
     MyTodayAdapter adapter;
     Button btn2_today, btn1_today, btn3_today, btn4_today;
     String str;
     Button ButtonAddGoal_today;
     TextView EditTextForNewGoal_today;
-//    public String[] goalArr = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"};
+    SharedPreferences ListGoalsSharedPreferences;
+    String todayDataForNameInSharedPreferences;
+    Integer schGoalsForNameInSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,21 +41,20 @@ public class Today extends AppCompatActivity {
         str = i.getStringExtra("btn2"); //вынимаем btn1
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
+//        работа с shared preferences
+        todayDataForNameInSharedPreferences = "28.04.2024";
+//условное добавление
+        saveGoalsInSharedPreferences("a true", todayDataForNameInSharedPreferences);
+        saveGoalsInSharedPreferences("b false", todayDataForNameInSharedPreferences);
+        saveGoalsInSharedPreferences("c false", todayDataForNameInSharedPreferences);
+
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
-        goalArr.add("1");
-        goalArr.add("2");
-        goalArr.add("3");
-        goalArr.add("4");
-        goalArr.add("5");
-        goalArr.add("6");
 
-        goalChecked.add(true);
-        goalChecked.add(true);
-        goalChecked.add(false);
-        goalChecked.add(false);
-        goalChecked.add(true);
-        goalChecked.add(false);
+        for (String oneGoal : getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
+            goalArr.add(oneGoal.split(" ")[0]);
+            goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
+        }
 
         btn1_today = findViewById(R.id.btn1_today);
         btn2_today = findViewById(R.id.btn2_today);
@@ -55,7 +62,6 @@ public class Today extends AppCompatActivity {
         btn4_today = findViewById(R.id.btn4_today);
         ButtonAddGoal_today = findViewById(R.id.ButtonAddGoal_today);
         EditTextForNewGoal_today = findViewById(R.id.EditTextForNewGoal_today);
-
 
         View.OnClickListener listener=new View.OnClickListener() {
             @Override
@@ -69,7 +75,6 @@ public class Today extends AppCompatActivity {
 
         btn1_today.setOnClickListener(listener);
 
-
         //АДАПТЕР_item_1,
         myGoals = makeGoal(goalArr, goalChecked);
         adapter = new MyTodayAdapter(this, myGoals);
@@ -80,12 +85,17 @@ public class Today extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str = EditTextForNewGoal_today.getText().toString();
-//                Toast.makeText(Today.this, str, Toast.LENGTH_SHORT).show();
                 Goal newGoal = new Goal();
                 newGoal.did = false;
                 newGoal.name = str;
-
                 myGoals.add(newGoal);
+
+//                работа с shared preferences
+                saveGoalsInSharedPreferences(str+" false", todayDataForNameInSharedPreferences);
+                for(String i:getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
+                    Toast.makeText(Today.this, i, Toast.LENGTH_SHORT).show();
+                }
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -97,14 +107,6 @@ public class Today extends AppCompatActivity {
                 Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
             }
         });
-//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, final int i, long id) {
-//                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
-//                myGoals.remove(i);
-//                adapter.notifyDataSetChanged();
-//            };
-//        });
     }
 
     ArrayList<Goal> makeGoal(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked) {
@@ -118,6 +120,29 @@ public class Today extends AppCompatActivity {
             arr.add(goal);
         }
         return arr;
+    }
+
+    void saveGoalsInSharedPreferences(String newGoal, String todayDataForNameInSharedPreferences1){
+        ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
+
+        Set <String> listGoalsForAdd = new HashSet();
+        listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences, new HashSet<String>());
+        listGoalsForAdd.add(newGoal);
+
+        editor.remove(todayDataForNameInSharedPreferences1);
+        editor.putStringSet(todayDataForNameInSharedPreferences1, listGoalsForAdd);
+        editor.commit();
+
+    }
+    ArrayList<String> getGoalsFromSharedPreferences(String todayDataForNameInSharedPreferences1){
+        ArrayList <String> goalsList = new ArrayList();
+        ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
+        for (String i : ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences1, new HashSet<String>())){
+            goalsList.add(i);
+        }
+        return goalsList;
     }
 
 }
