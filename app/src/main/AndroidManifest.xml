@@ -16,6 +16,8 @@
             android:exported="false" />
         <activity android:name=".Today"
             android:exported="false" />
+        <activity android:name=".Week"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

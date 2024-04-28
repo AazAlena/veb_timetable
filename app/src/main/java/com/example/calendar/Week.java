@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,62 +22,65 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Today extends AppCompatActivity {
+public class Week extends AppCompatActivity {
     ArrayList<String> goalArr;
+    ArrayList<String> goalData;
     ArrayList<Boolean> goalChecked;
-    ArrayList<Goal> myGoals;
+    ArrayList<GoalWeek> myGoals;
     ListView lv;
-    MyTodayAdapter adapter;
-    Button settings_today, calendar_today, today_today, week_today;
+    MyWeekAdapter adapter;
+    Button settings_week, calendar_week, today_week, week_week;
     String todayDataGetted;
-    Button ButtonAddGoal_today;
-    EditText EditTextForNewGoal_today;
-    TextView Data_today;
     SharedPreferences ListGoalsSharedPreferences;
     String todayDataForNameInSharedPreferences;
-
+    String startDataForNameInSharedPreferences;
+    String endDataForNameInSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.today);
+        setContentView(R.layout.week);
 
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         int realYear = year;
         int realMonth = month;
         int realDay = day;
 
-        settings_today = findViewById(R.id.btn1_today);
-        calendar_today = findViewById(R.id.btn2_today);
-        today_today = findViewById(R.id.btn3_today);
-        week_today = findViewById(R.id.btn4_today);
-        ButtonAddGoal_today = findViewById(R.id.ButtonAddGoal_today);
-        EditTextForNewGoal_today = findViewById(R.id.EditTextForNewGoal_today);
-        Data_today = findViewById(R.id.data_today);
-
-        Intent i = getIntent();//достаём посылку
-        todayDataGetted = i.getStringExtra("from calendarOneDay to today "); //вынимаем from calendarOneDay to today
+        Intent j = getIntent();//достаём посылку
+        todayDataGetted = j.getStringExtra("from calendarOneDay to week "); //вынимаем from calendarOneDay to today
         Toast.makeText(this, todayDataGetted, Toast.LENGTH_SHORT).show();
-        todayDataForNameInSharedPreferences = todayDataGetted;
 
-        Data_today.setText(todayDataForNameInSharedPreferences);
+        todayDataForNameInSharedPreferences = realDay + "." + realMonth + "." + realYear;
+        startDataForNameInSharedPreferences = Integer.toString(realDay - dayOfWeek + 1) + "." + realMonth + "." + realYear;
+        endDataForNameInSharedPreferences = Integer.toString(realDay + (7 - dayOfWeek)) + "." + realMonth + "." + realYear;
 
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
+        goalData = new ArrayList<>();
 
-        for (String oneGoal : getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
-            goalArr.add(oneGoal.split(" ")[0]);
-            goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
+        for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek); i++){
+            for (String oneGoal : getGoalsFromSharedPreferences( (i + "." + realMonth + "." + realYear) )){
+                goalArr.add(oneGoal.split(" ")[0]);
+                goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
+                goalData.add((i + "." + realMonth + "." + realYear));
+            }
         }
+
+
+        settings_week = findViewById(R.id.btn1_week);
+        calendar_week = findViewById(R.id.btn2_week);
+        today_week = findViewById(R.id.btn3_week);
+        week_week = findViewById(R.id.btn4_week);
 
         View.OnClickListener listenerSettings=new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = "from today to settings";
-                Intent i = new Intent(Today.this, MainActivity.class);
+                Intent i = new Intent(Week.this, MainActivity.class);
                 i.putExtra("result", str);
                 startActivityForResult(i, 0);
             }
@@ -86,7 +90,7 @@ public class Today extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String str = ( realDay + "." + realMonth + "." + realYear).toString();
-                Intent i = new Intent(Today.this, Today.class);
+                Intent i = new Intent(Week.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
             }
@@ -95,12 +99,12 @@ public class Today extends AppCompatActivity {
         View.OnClickListener listenerToCalendar = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Today.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Week.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(Today.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Week.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
                         String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
-                        Intent i = new Intent(Today.this, Today.class);
+                        Intent i = new Intent(Week.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
                     }
@@ -110,58 +114,41 @@ public class Today extends AppCompatActivity {
             }
         };
 
-        settings_today.setOnClickListener(listenerSettings);
-        today_today.setOnClickListener(listenerToToday);
-        calendar_today.setOnClickListener(listenerToCalendar);
+        settings_week.setOnClickListener(listenerSettings);
+        today_week.setOnClickListener(listenerToToday);
+        calendar_week.setOnClickListener(listenerToCalendar);
 
         //АДАПТЕР_item_1,
-        myGoals = makeGoal(goalArr, goalChecked);
-        adapter = new MyTodayAdapter(this, myGoals);
-        lv = findViewById(R.id.lv_checklists);
+        myGoals = makeGoalWeek(goalArr, goalChecked, goalData);
+        adapter = new MyWeekAdapter(this, myGoals);
+        lv = findViewById(R.id.lv_checklists_week);
         lv.setAdapter(adapter);
-
-        ButtonAddGoal_today.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str = EditTextForNewGoal_today.getText().toString();
-                Goal newGoal = new Goal();
-                newGoal.did = false;
-                newGoal.name = str;
-                myGoals.add(newGoal);
-
-//                работа с shared preferences
-                saveGoalsInSharedPreferences(str+" false", todayDataForNameInSharedPreferences);
-                for(String i:getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
-                    Toast.makeText(Today.this, i, Toast.LENGTH_SHORT).show();
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-
 
 //        !!!!!!!!!!!!!!!!!!
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Week.this, "Удаляю", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    ArrayList<Goal> makeGoal(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked) {
-        ArrayList<Goal> arr = new ArrayList<>();
+    ArrayList<GoalWeek> makeGoalWeek(ArrayList <String>goalArr, ArrayList <Boolean>goalChecked, ArrayList <String>goalData) {
+        ArrayList<GoalWeek> arr = new ArrayList<>();
 
         for (int i = 0; i < goalArr.size(); i++) {
-            Goal goal = new Goal();
+            GoalWeek goal = new GoalWeek();
             goal.name = goalArr.get(i);
             goal.did = goalChecked.get(i);
+            goal.data = goalData.get(i);
 
             arr.add(goal);
         }
         return arr;
     }
-//для смены чекбокса и изменения boolean в shared preferences
+
+
+    //для смены чекбокса и изменения boolean в shared preferences
     public void changeGoalsInSharedPreferences(String existedGoal, String todayDataForNameInSharedPreferences1){
         ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
@@ -204,4 +191,5 @@ public class Today extends AppCompatActivity {
     }
 
 }
+
 

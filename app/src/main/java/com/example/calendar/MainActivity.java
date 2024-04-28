@@ -1,5 +1,5 @@
 package com.example.calendar;
-
+//android:background="@drawable/rounded_corner"
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -71,9 +71,19 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-//        Toast.makeText(MainActivity.this, (String) (year + "." + month + "." + day), Toast.LENGTH_SHORT).show();
+        View.OnClickListener listenerToWeek = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
+                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                Intent i = new Intent(MainActivity.this, Week.class);
+                i.putExtra("from calendarOneDay to week ", str);
+                startActivityForResult(i, 0);
+            }
+        };
+        week.setOnClickListener(listenerToWeek);
         calendar.setOnClickListener(listenerToCalendar); // показывает календарь премещает в calendar one day
-        today.setOnClickListener(listenerToToday); //перемещает в noday
+        today.setOnClickListener(listenerToToday); //перемещает в today
 
     };
 
