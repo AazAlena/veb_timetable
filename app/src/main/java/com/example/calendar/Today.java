@@ -29,7 +29,7 @@ public class Today extends AppCompatActivity {
     Button ButtonAddGoal_today;
     TextView EditTextForNewGoal_today;
     SharedPreferences ListGoalsSharedPreferences;
-    String todayDataForNameInSharedPreferences;
+    public String todayDataForNameInSharedPreferences;
     Integer schGoalsForNameInSharedPreferences;
 
     @Override
@@ -43,10 +43,11 @@ public class Today extends AppCompatActivity {
 
 //        работа с shared preferences
         todayDataForNameInSharedPreferences = "28.04.2024";
+
 //условное добавление
-        saveGoalsInSharedPreferences("a true", todayDataForNameInSharedPreferences);
-        saveGoalsInSharedPreferences("b false", todayDataForNameInSharedPreferences);
-        saveGoalsInSharedPreferences("c false", todayDataForNameInSharedPreferences);
+//        saveGoalsInSharedPreferences("a true", todayDataForNameInSharedPreferences);
+//        saveGoalsInSharedPreferences("b false", todayDataForNameInSharedPreferences);
+//        saveGoalsInSharedPreferences("c false", todayDataForNameInSharedPreferences);
 
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
@@ -100,6 +101,7 @@ public class Today extends AppCompatActivity {
             }
         });
 
+
 //        !!!!!!!!!!!!!!!!!!
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,18 +123,36 @@ public class Today extends AppCompatActivity {
         }
         return arr;
     }
+//для смены чекбокса и изменения boolean в shared preferences
+    public void changeGoalsInSharedPreferences(String existedGoal, String todayDataForNameInSharedPreferences1){
+        ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
+        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+
+        Set <String> listGoalsForAdd = new HashSet();
+        listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences1, new HashSet<String>());
+        listGoalsForAdd.remove(existedGoal);
+        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+        listGoalsForAdd.add(existedGoal);
+
+        editor.remove(todayDataForNameInSharedPreferences1);
+        editor.apply();
+        editor.putStringSet(todayDataForNameInSharedPreferences1, listGoalsForAdd);
+        editor.apply();
+    }
 
     void saveGoalsInSharedPreferences(String newGoal, String todayDataForNameInSharedPreferences1){
         ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
 
         Set <String> listGoalsForAdd = new HashSet();
-        listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences, new HashSet<String>());
+        listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences1, new HashSet<String>());
         listGoalsForAdd.add(newGoal);
 
         editor.remove(todayDataForNameInSharedPreferences1);
+        editor.apply();
         editor.putStringSet(todayDataForNameInSharedPreferences1, listGoalsForAdd);
-        editor.commit();
+        editor.apply();
 
     }
     ArrayList<String> getGoalsFromSharedPreferences(String todayDataForNameInSharedPreferences1){

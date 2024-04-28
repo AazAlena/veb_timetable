@@ -10,7 +10,7 @@
         android:id="@+id/btn1_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
+        android:text="Settings"
         android:tooltipText="uifwhsd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn2_today"
@@ -23,11 +23,11 @@
         android:id="@+id/btn2_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2"
+        android:text="Calendar"
         android:tooltipText="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
@@ -37,10 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="3"
+        android:text="Today"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toEndOf="@+id/btn2_today"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
@@ -50,7 +50,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="4"
+
+        android:backgroundTint="#776750b0"
+        android:text="Week"
+        android:textColor="#55FFFFFF"
+        android:textSize="33px"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -58,33 +63,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
 
-
-    <TextView
-        android:id="@+id/textView_today"
-        android:layout_width="78dp"
-        android:layout_height="16dp"
-        android:text="this is today"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.124" />
-
     <ListView
         android:id="@+id/lv_checklists"
 
+        android:layout_width="378dp"
+        android:layout_height="450dp"
+        app:layout_below="@+id/EditTextForNewGoal_today"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.337"
-        android:layout_width="409dp"
-        android:layout_height="373dp"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="-122dp" />
+        app:layout_constraintVertical_bias="0.679" />
 
     <Button
         android:id="@+id/ButtonAddGoal_today"
@@ -93,25 +84,23 @@
         android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_checklists"
-        app:layout_constraintVertical_bias="0.158" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163" />
 
     <EditText
         android:id="@+id/EditTextForNewGoal_today"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
-        app:layout_constraintStart_toEndOf="@+id/ButtonAddGoal_today"
-        app:layout_constraintTop_toBottomOf="@+id/lv_checklists"
-        app:layout_constraintVertical_bias="0.171"
-        android:layout_width="248dp"
+        android:layout_width="265dp"
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="text"
         android:text=""
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="440dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.162" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

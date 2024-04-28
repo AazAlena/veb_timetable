@@ -1,6 +1,7 @@
 package com.example.calendar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
+
 
 public class MyTodayAdapter extends ArrayAdapter<Goal> {
     public MyTodayAdapter(Context context,  ArrayList<Goal> arr) {
@@ -30,9 +32,11 @@ public class MyTodayAdapter extends ArrayAdapter<Goal> {
         ch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goal.did = ((CheckBox) v).isChecked();
-            }
+                goal.did = ((CheckBox) v).isChecked();}
         });
         return convertView;
     }
+
+
+
 }

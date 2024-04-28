@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         btn3.setOnClickListener(listener3); //показывает календарь и перемещает в активность calrndar_one_day
 
     };
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,27 +82,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-//
-//                if (view.getId() == R.id.btn1) {
-//                        f = new MyCalendarOneDay();
-//                        }
-//                        else if (view.getId() == R.id.btn2) {
-//                        DatePickerDialog datePickerDialog = new DatePickerDialog(
-//
-//                        MainActivity.this,
-//                        new DatePickerDialog.OnDateSetListener() {
-//
-//@Override
-//public void onDateSet(DatePicker view, int year,
-//        int monthOfYear, int dayOfMonth) {
-//
-//        Toast.makeText(MainActivity.this, (String)(year + " "+ monthOfYear+" "+dayOfMonth), Toast.LENGTH_SHORT).show();
-//        GlobalYear = year;
-//        GlobalMonth = monthOfYear;
-//        GlobalDate = dayOfMonth;
-//        }
-//        },
-//        year, month, day);
-//
-//        datePickerDialog.show();
-//        f = new MyToday();
