@@ -36,12 +36,15 @@ public class CalendarOneDay extends AppCompatActivity {
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
+        int realYear = year;
+        int realMonth = month;
+        int realDay = day;
 
         View.OnClickListener listenerToToday = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(CalendarOneDay.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = (day+ " " + month + " " + year).toString();
+                String str = (realDay+ "." + realMonth + "." + realYear).toString();
                 Intent i = new Intent(CalendarOneDay.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
@@ -52,11 +55,12 @@ public class CalendarOneDay extends AppCompatActivity {
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CalendarOneDay.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(CalendarOneDay.this, (String) (year + " " + monthOfYear + " " + dayOfMonth), Toast.LENGTH_SHORT).show();
-                        String str = (year + " " + monthOfYear + " " + dayOfMonth).toString();
-                        Intent i = new Intent(CalendarOneDay.this, CalendarOneDay.class);
-                        i.putExtra("toCalendarOneDay", str);
+                    public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
+                        Toast.makeText(CalendarOneDay.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
+                        Intent i = new Intent(CalendarOneDay.this, Today.class);
+//                        i.putExtra("toCalendarOneDay", str);
+                        i.putExtra("from calendarOneDay to today", str);
                         startActivityForResult(i, 0);
                     }
                 }, year, month, day);
@@ -73,13 +77,14 @@ public class CalendarOneDay extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         };
-        Toast.makeText(CalendarOneDay.this, (String) (year + " " + month + " " + day), Toast.LENGTH_SHORT).show();
+        Toast.makeText(CalendarOneDay.this, (String) (day + " " + month + " " + year), Toast.LENGTH_SHORT).show();
 
         settings_cal_one_day.setOnClickListener(listenerToSettings);
         today_cal_one_day.setOnClickListener(listenerToToday); // перемещает между первой и today активностью
         calendar_cal_one_day.setOnClickListener(listenerToCalendar); //показывает календарь и перемещает в активность calrndar_one_day
 
 // а теперь разборки с сождержимым
+
 
     }
 }

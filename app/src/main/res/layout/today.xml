@@ -68,7 +68,6 @@
 
         android:layout_width="378dp"
         android:layout_height="450dp"
-        app:layout_below="@+id/EditTextForNewGoal_today"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

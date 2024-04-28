@@ -24,12 +24,12 @@ public class Today extends AppCompatActivity {
     Set<String> listGoalsForToday;
     ListView lv;
     MyTodayAdapter adapter;
-    Button btn2_today, btn1_today, btn3_today, btn4_today;
-    String str;
+    Button settings_today, calendar_today, day_today, week_today;
+    String todayDataGetted;
     Button ButtonAddGoal_today;
     TextView EditTextForNewGoal_today;
     SharedPreferences ListGoalsSharedPreferences;
-    public String todayDataForNameInSharedPreferences;
+    String todayDataForNameInSharedPreferences;
     Integer schGoalsForNameInSharedPreferences;
 
     @Override
@@ -38,16 +38,10 @@ public class Today extends AppCompatActivity {
         setContentView(R.layout.today);
 
         Intent i = getIntent();//достаём посылку
-        str = i.getStringExtra("btn2"); //вынимаем btn1
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        todayDataGetted = i.getStringExtra("from calendarOneDay to today "); //вынимаем from calendarOneDay to today
+        Toast.makeText(this, todayDataGetted, Toast.LENGTH_SHORT).show();
 
-//        работа с shared preferences
-        todayDataForNameInSharedPreferences = "28.04.2024";
-
-//условное добавление
-//        saveGoalsInSharedPreferences("a true", todayDataForNameInSharedPreferences);
-//        saveGoalsInSharedPreferences("b false", todayDataForNameInSharedPreferences);
-//        saveGoalsInSharedPreferences("c false", todayDataForNameInSharedPreferences);
+        todayDataForNameInSharedPreferences = todayDataGetted;
 
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
@@ -57,10 +51,10 @@ public class Today extends AppCompatActivity {
             goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
         }
 
-        btn1_today = findViewById(R.id.btn1_today);
-        btn2_today = findViewById(R.id.btn2_today);
-        btn3_today = findViewById(R.id.btn3_today);
-        btn4_today = findViewById(R.id.btn4_today);
+        settings_today = findViewById(R.id.btn1_today);
+        calendar_today = findViewById(R.id.btn2_today);
+        day_today = findViewById(R.id.btn3_today);
+        week_today = findViewById(R.id.btn4_today);
         ButtonAddGoal_today = findViewById(R.id.ButtonAddGoal_today);
         EditTextForNewGoal_today = findViewById(R.id.EditTextForNewGoal_today);
 
@@ -68,13 +62,14 @@ public class Today extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i2 = new Intent();
-                i2.putExtra("result", "hello from today" + str);
+                i2.putExtra("result", "hello from today" + todayDataGetted);
                 setResult(0, i2);
                 finish();
             }
         };
 
-        btn1_today.setOnClickListener(listener);
+
+        settings_today.setOnClickListener(listener);
 
         //АДАПТЕР_item_1,
         myGoals = makeGoal(goalArr, goalChecked);

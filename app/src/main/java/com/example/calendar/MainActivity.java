@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn1, btn2, btn3, btn4;
+    Button settings, calendar, today, week;
     int year, month, day;
 
     String str;
@@ -28,37 +28,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn1 = findViewById(R.id.btn1);
-        btn2 = findViewById(R.id.btn2);
-        btn3 = findViewById(R.id.btn3);
-        btn4 = findViewById(R.id.btn4);
+        settings = findViewById(R.id.btn1);
+        calendar = findViewById(R.id.btn2);
+        today = findViewById(R.id.btn3);
+        week = findViewById(R.id.btn4);
         Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
 
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
+        int realYear = year;
+        int realMonth = month;
+        int realDay = day;
 
-        View.OnClickListener listener3 = new View.OnClickListener() {
+        View.OnClickListener listenerToToday = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = (year + " " + month + " " + day).toString();
+//                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
+                String str = ( realDay + "." + realMonth + "." + realYear).toString();
                 Intent i = new Intent(MainActivity.this, Today.class);
-                i.putExtra("btn2", str);
+                i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
             }
         };
-        View.OnClickListener listener2 = new View.OnClickListener() {
+        View.OnClickListener listenerToCalendar = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(MainActivity.this, (String) (year + " " + monthOfYear + " " + dayOfMonth), Toast.LENGTH_SHORT).show();
-                        String str = (year + " " + monthOfYear + " " + dayOfMonth).toString();
-                        Intent i = new Intent(MainActivity.this, CalendarOneDay.class);
-                        i.putExtra("toCalendarOneDay", str);
+                    public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
+                        Toast.makeText(MainActivity.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
+                        Intent i = new Intent(MainActivity.this, Today.class);
+                        i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
                     }
                 }, year, month, day);
@@ -67,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        Toast.makeText(MainActivity.this, (String) (year + " " + month + " " + day), Toast.LENGTH_SHORT).show();
-        btn2.setOnClickListener(listener2); // перемещает между первой и today активностью
-        btn3.setOnClickListener(listener3); //показывает календарь и перемещает в активность calrndar_one_day
+//        Toast.makeText(MainActivity.this, (String) (year + "." + month + "." + day), Toast.LENGTH_SHORT).show();
+        calendar.setOnClickListener(listenerToCalendar); // показывает календарь премещает в calendar one day
+        today.setOnClickListener(listenerToToday); //перемещает в noday
 
     };
 
