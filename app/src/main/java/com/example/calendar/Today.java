@@ -109,7 +109,17 @@ public class Today extends AppCompatActivity {
                 datePickerDialog.show();
             }
         };
+        View.OnClickListener listenerToWeek = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                Intent i = new Intent(Today.this, Week.class);
+                i.putExtra("from calendarOneDay to week ", str);
+                startActivityForResult(i, 0);
+            }
+        };
 
+        week_today.setOnClickListener(listenerToWeek);
         settings_today.setOnClickListener(listenerSettings);
         today_today.setOnClickListener(listenerToToday);
         calendar_today.setOnClickListener(listenerToCalendar);

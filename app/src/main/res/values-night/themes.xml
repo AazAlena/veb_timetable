@@ -1,7 +1,29 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<!--<resources xmlns:tools="http://schemas.android.com/tools">-->
+<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
+<!--    <style name="Base.Theme.Calendar" parent="Theme.Material3.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your dark theme here. &ndash;&gt;-->
+<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_dark_primary</item> &ndash;&gt;-->
+<!--        -->
+<!--    </style>-->
+<!--</resources>-->
+
     <!-- Base application theme. -->
-    <style name="Base.Theme.Calendar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<resources xmlns:tools="http://schemas.android.com/tools">
+<!-- Base application theme. -->
+<style  name="Base.Theme.Calendar" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">@color/moon_2</item>
+    <item name="colorPrimaryVariant">@color/moon_3</item>
+    <item name="colorOnPrimary">@color/moon_1</item>
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary">@color/moon_1</item>
+    <item name="colorSecondaryVariant">@color/moon_4</item>
+    <item name="colorOnSecondary">@color/moon_dop</item>
+    <!--below is the text color-->
+    <item name="android:textColor">@color/white</item>
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor" tools:targetApi="l">@color/moon_dop</item>
+    <!-- Customize your theme here. -->
+    <!-- Customize your theme here. -->
+</style>
 </resources>
