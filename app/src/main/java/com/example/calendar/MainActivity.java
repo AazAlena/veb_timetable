@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         SwitchSun = findViewById(R.id.switchSun);
         SwitchMoon = findViewById(R.id.switchMoon);
 
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
 
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
         View.OnClickListener listenerToMoon = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
                 Intent i = new Intent(MainActivity.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
@@ -99,13 +100,13 @@ public class MainActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(MainActivity.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
-                        String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
+//                        Toast.makeText(MainActivity.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        String str = (dayOfMonth + "." + (monthOfYear+1) + "." + year1).toString();
                         Intent i = new Intent(MainActivity.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
                     }
-                }, year, month, day);
+                }, year,  month, day);
 
                 datePickerDialog.show();
             }
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
                 Intent i = new Intent(MainActivity.this, Week.class);
                 i.putExtra("from calendarOneDay to week ", str);
                 startActivityForResult(i, 0);
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 0 & requestCode == 0) {
             String str = data.getStringExtra("result");
-            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         }
     }
 }

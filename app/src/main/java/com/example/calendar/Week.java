@@ -52,23 +52,39 @@ public class Week extends AppCompatActivity {
 
         Intent j = getIntent();//достаём посылку
         todayDataGetted = j.getStringExtra("from calendarOneDay to week "); //вынимаем from calendarOneDay to today
-        Toast.makeText(this, todayDataGetted, Toast.LENGTH_SHORT).show();
 
         todayDataForNameInSharedPreferences = realDay + "." + realMonth + "." + realYear;
-        startDataForNameInSharedPreferences = Integer.toString(realDay - dayOfWeek + 1) + "." + realMonth + "." + realYear;
+        startDataForNameInSharedPreferences = Integer.toString(realDay - dayOfWeek) + "." + realMonth + "." + realYear;
         endDataForNameInSharedPreferences = Integer.toString(realDay + (7 - dayOfWeek)) + "." + realMonth + "." + realYear;
 
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
         goalData = new ArrayList<>();
 
-        for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek); i++){
-            for (String oneGoal : getGoalsFromSharedPreferences( (i + "." + realMonth + "." + realYear) )){
-                goalArr.add(oneGoal.split(" ")[0]);
-                goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
+        for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek); i++) {
+            for (String oneGoal : getGoalsFromSharedPreferences((i + "." + realMonth + "." + realYear))) {
+                goalArr.add(oneGoal.split(" / ")[0]);
+                goalChecked.add(Boolean.valueOf(oneGoal.split(" / ")[1]));
                 goalData.add((i + "." + realMonth + "." + realYear));
             }
         }
+//        if (realDay < dayOfWeek) {
+//            for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek); i++) {
+//                for (String oneGoal : getGoalsFromSharedPreferences((i + "." + realMonth + "." + realYear))) {
+//                    goalArr.add(oneGoal.split(" / ")[0]);
+//                    goalChecked.add(Boolean.valueOf(oneGoal.split(" / ")[1]));
+//                    goalData.add((i + "." + realMonth + "." + realYear));
+//                }
+//            }
+//        } else {
+//            for (int i = 1; i <= 7; i++) {
+//                for (String oneGoal : getGoalsFromSharedPreferences((i + "." + realMonth + "." + realYear))) {
+//                    goalArr.add(oneGoal.split(" / ")[0]);
+//                    goalChecked.add(Boolean.valueOf(oneGoal.split(" / ")[1]));
+//                    goalData.add((i + "." + realMonth + "." + realYear));
+//                }
+//            }
+//        }
 
 
         settings_week = findViewById(R.id.btn1_week);
@@ -89,7 +105,7 @@ public class Week extends AppCompatActivity {
         View.OnClickListener listenerToToday = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
                 Intent i = new Intent(Week.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
@@ -102,8 +118,8 @@ public class Week extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Week.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(Week.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
-                        String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
+//                        Toast.makeText(Week.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        String str = (dayOfMonth + "." + (monthOfYear+1) + "." + year1).toString();
                         Intent i = new Intent(Week.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
@@ -152,12 +168,12 @@ public class Week extends AppCompatActivity {
     public void changeGoalsInSharedPreferences(String existedGoal, String todayDataForNameInSharedPreferences1){
         ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
-        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+        existedGoal = existedGoal.split(" / ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" / ")[1]));
 
         Set <String> listGoalsForAdd = new HashSet();
         listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences1, new HashSet<String>());
         listGoalsForAdd.remove(existedGoal);
-        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+        existedGoal = existedGoal.split(" / ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" / ")[1]));
         listGoalsForAdd.add(existedGoal);
 
         editor.remove(todayDataForNameInSharedPreferences1);

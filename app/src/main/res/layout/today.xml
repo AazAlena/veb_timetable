@@ -41,7 +41,7 @@
             android:id="@+id/btn1_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:layout_marginRight="1dp"
             android:layout_marginVertical="5dp"
             android:text="Settings"
@@ -88,9 +88,9 @@
             android:layout_marginVertical="5dp"
 
             android:text="Today"
-
             android:textColor="@color/white"
             android:textSize="33px"
+
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

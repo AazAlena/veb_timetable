@@ -3,6 +3,7 @@ package com.example.calendar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,17 +60,22 @@ public class Today extends AppCompatActivity {
 
         Intent i = getIntent();//достаём посылку
         todayDataGetted = i.getStringExtra("from calendarOneDay to today "); //вынимаем from calendarOneDay to today
-        Toast.makeText(this, todayDataGetted, Toast.LENGTH_SHORT).show();
-        todayDataForNameInSharedPreferences = todayDataGetted;
+        todayDataForNameInSharedPreferences = todayDataGetted.toString();
+        Toast.makeText(this, todayDataForNameInSharedPreferences, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, realDay+"."+(realMonth+1)+"."+realYear, Toast.LENGTH_SHORT).show();
 
         Data_today.setText(todayDataForNameInSharedPreferences);
+        if (todayDataForNameInSharedPreferences != (realDay+"."+(realMonth+1)+"."+realYear).toString()){
+//            today_today.setBackgroundColor((int) Long.parseLong("FF7F0055", 16));
+            Toast.makeText(this, realDay+"."+(realMonth+1)+"."+realYear, Toast.LENGTH_SHORT).show();
+        }
 
         goalArr = new ArrayList<>();
         goalChecked = new ArrayList<>();
 
         for (String oneGoal : getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
-            goalArr.add(oneGoal.split(" ")[0]);
-            goalChecked.add(Boolean.valueOf(oneGoal.split(" ")[1]));
+            goalArr.add(oneGoal.split(" / ")[0]);
+            goalChecked.add(Boolean.valueOf(oneGoal.split(" / ")[1]));
         }
 
         View.OnClickListener listenerSettings=new View.OnClickListener() {
@@ -85,7 +91,7 @@ public class Today extends AppCompatActivity {
         View.OnClickListener listenerToToday = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
                 Intent i = new Intent(Today.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
@@ -98,8 +104,8 @@ public class Today extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Today.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(Today.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
-                        String str = (dayOfMonth + "." + monthOfYear + "." + year1).toString();
+//                        Toast.makeText(Today.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
+                        String str = (dayOfMonth + "." + (monthOfYear+1) + "." + year1).toString();
                         Intent i = new Intent(Today.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
@@ -112,7 +118,7 @@ public class Today extends AppCompatActivity {
         View.OnClickListener listenerToWeek = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = ( realDay + "." + realMonth + "." + realYear).toString();
+                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
                 Intent i = new Intent(Today.this, Week.class);
                 i.putExtra("from calendarOneDay to week ", str);
                 startActivityForResult(i, 0);
@@ -140,10 +146,7 @@ public class Today extends AppCompatActivity {
                 myGoals.add(newGoal);
 
 //                работа с shared preferences
-                saveGoalsInSharedPreferences(str+" false", todayDataForNameInSharedPreferences);
-                for(String i:getGoalsFromSharedPreferences(todayDataForNameInSharedPreferences)){
-                    Toast.makeText(Today.this, i, Toast.LENGTH_SHORT).show();
-                }
+                saveGoalsInSharedPreferences(str+" / false", todayDataForNameInSharedPreferences);
 
                 adapter.notifyDataSetChanged();
             }
@@ -154,7 +157,7 @@ public class Today extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Today.this, "Удаляю", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,12 +178,12 @@ public class Today extends AppCompatActivity {
     public void changeGoalsInSharedPreferences(String existedGoal, String todayDataForNameInSharedPreferences1){
         ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = ListGoalsSharedPreferences.edit();
-        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+        existedGoal = existedGoal.split(" / ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" / ")[1]));
 
         Set <String> listGoalsForAdd = new HashSet();
         listGoalsForAdd = ListGoalsSharedPreferences.getStringSet(todayDataForNameInSharedPreferences1, new HashSet<String>());
         listGoalsForAdd.remove(existedGoal);
-        existedGoal = existedGoal.split(" ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" ")[1]));
+        existedGoal = existedGoal.split(" / ")[0]+Boolean.toString(!Boolean.getBoolean(existedGoal.split(" / ")[1]));
         listGoalsForAdd.add(existedGoal);
 
         editor.remove(todayDataForNameInSharedPreferences1);
