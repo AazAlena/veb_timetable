@@ -53,6 +53,7 @@ public class Week extends AppCompatActivity {
         Intent j = getIntent();//достаём посылку
         todayDataGetted = j.getStringExtra("from calendarOneDay to week "); //вынимаем from calendarOneDay to today
 
+
         todayDataForNameInSharedPreferences = realDay + "." + realMonth + "." + realYear;
         startDataForNameInSharedPreferences = Integer.toString(realDay - dayOfWeek) + "." + realMonth + "." + realYear;
         endDataForNameInSharedPreferences = Integer.toString(realDay + (7 - dayOfWeek)) + "." + realMonth + "." + realYear;
@@ -61,8 +62,11 @@ public class Week extends AppCompatActivity {
         goalChecked = new ArrayList<>();
         goalData = new ArrayList<>();
 
-        for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek); i++) {
+        for (int i = realDay - dayOfWeek + 1; i <= realDay + (7 - dayOfWeek) + 1; i++) {
+//            Toast.makeText(Week.this, Integer.toString(i), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(Week.this, "!!" + Integer.toString(realDay+(7-dayOfWeek)), Toast.LENGTH_SHORT).show();
             for (String oneGoal : getGoalsFromSharedPreferences((i + "." + realMonth + "." + realYear))) {
+//                Toast.makeText(Week.this, Integer.toString(i), Toast.LENGTH_SHORT).show();
                 goalArr.add(oneGoal.split(" / ")[0]);
                 goalChecked.add(Boolean.valueOf(oneGoal.split(" / ")[1]));
                 goalData.add((i + "." + realMonth + "." + realYear));
