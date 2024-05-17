@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="sun_1">#B3C8CF</color> <!--кнопки-->
+    <color name="sun_2">#BED7DC</color>
+    <color name="sun_dop">#D8E3BC</color>
+    <color name="sun_3">#F1EEDC</color>
+    <color name="sun_4">#E5DDC5</color>
+<!--no-->
+    <color name="moon_1">#153448</color>
+    <color name="moon_2">#3C5B6F</color>
+    <color name="moon_dop">#687274</color>
+    <color name="moon_3">#948979</color>
+    <color name="moon_4">#DFD0B8</color>
+</resources>
