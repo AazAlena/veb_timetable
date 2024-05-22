@@ -59,13 +59,12 @@ public class Today extends AppCompatActivity {
         Intent i = getIntent();//достаём посылку
         todayDataGetted = i.getStringExtra("from calendarOneDay to today "); //вынимаем from calendarOneDay to today
         todayDataForNameInSharedPreferences = todayDataGetted.toString();
-//        Toast.makeText(this, todayDataForNameInSharedPreferences, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, realDay+"."+(realMonth+1)+"."+realYear, Toast.LENGTH_SHORT).show();
 
         Data_today.setText(todayDataForNameInSharedPreferences);
-        if (todayDataForNameInSharedPreferences != (realDay+"."+(realMonth+1)+"."+realYear).toString()){
-//            today_today.setBackgroundColor((int) Long.parseLong("FF7F0055", 16));
-            Toast.makeText(this, "nor today "+realDay+"."+(realMonth+1)+"."+realYear, Toast.LENGTH_SHORT).show();
+        if (todayDataForNameInSharedPreferences.equals(realDay+"."+(realMonth+1)+"."+realYear)){
+            today_today.setBackgroundColor(getColor(R.color.moon_dop));
+        } else {
+            calendar_today.setBackgroundColor(getColor(R.color.moon_dop));
         }
 
         goalArr = new ArrayList<>();
@@ -102,7 +101,6 @@ public class Today extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Today.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-//                        Toast.makeText(Today.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
                         String str = (dayOfMonth + "." + (monthOfYear+1) + "." + year1).toString();
                         Intent i = new Intent(Today.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
@@ -194,8 +192,8 @@ public class Today extends AppCompatActivity {
         editor.apply();
         editor.putStringSet(todayDataForNameInSharedPreferences1, listGoalsForAdd);
         editor.apply();
-
     }
+
     ArrayList<String> getGoalsFromSharedPreferences(String todayDataForNameInSharedPreferences1){
         ArrayList <String> goalsList = new ArrayList();
         ListGoalsSharedPreferences = getSharedPreferences("ListGoalsSharedPreferences", MODE_PRIVATE);

@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 import com.example.myapplication.Goal;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MyTodayAdapter extends ArrayAdapter<Goal> {
@@ -23,7 +28,6 @@ public class MyTodayAdapter extends ArrayAdapter<Goal> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        !!!!!!!!!!!!!!!!!!!
 
         final Goal goal = getItem(position);
 
@@ -37,16 +41,16 @@ public class MyTodayAdapter extends ArrayAdapter<Goal> {
         ch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goal.did = ((CheckBox) v).isChecked();}
+                goal.did = ((CheckBox) v).isChecked();
+            }
         });
 
-        ImageView bin_delet=convertView.findViewById(R.id.bin_delet);
+        ImageView bin_delet = convertView.findViewById(R.id.bin_delet);
         bin_delet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 arr.remove(position);
                 notifyDataSetChanged();
-                Toast.makeText(view.getContext(), ""+position, Toast.LENGTH_SHORT).show();
             }
         } );
         return convertView;

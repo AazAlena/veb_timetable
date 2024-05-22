@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -38,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         SwitchSun = findViewById(R.id.switchSun);
         SwitchMoon = findViewById(R.id.switchMoon);
 
-//        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
@@ -48,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
         int realMonth = month;
         int realDay = day;
 
+        settings.setBackgroundColor(getColor(R.color.moon_dop));
 
         View.OnClickListener listenerToSun = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SwitchSun.isChecked()){
+                if (SwitchSun.isChecked()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     SwitchMoon.setChecked(!SwitchMoon.isChecked());
                 } else {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listenerToMoon = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SwitchMoon.isChecked()){
+                if (SwitchMoon.isChecked()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     SwitchSun.setChecked(!SwitchMoon.isChecked());
                 } else {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listenerToToday = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
+                String str = (realDay + "." + (realMonth + 1) + "." + realYear).toString();
                 Intent i = new Intent(MainActivity.this, Today.class);
                 i.putExtra("from calendarOneDay to today ", str);
                 startActivityForResult(i, 0);
@@ -93,13 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
-//                        Toast.makeText(MainActivity.this, (String) (dayOfMonth + " " + monthOfYear + " " + year1), Toast.LENGTH_SHORT).show();
-                        String str = (dayOfMonth + "." + (monthOfYear+1) + "." + year1).toString();
+                        String str = (dayOfMonth + "." + (monthOfYear + 1) + "." + year1).toString();
                         Intent i = new Intent(MainActivity.this, Today.class);
                         i.putExtra("from calendarOneDay to today ", str);
                         startActivityForResult(i, 0);
                     }
-                }, year,  month, day);
+                }, year, month, day);
 
                 datePickerDialog.show();
             }
@@ -108,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listenerToWeek = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Bingo!", Toast.LENGTH_SHORT).show();
-                String str = ( realDay + "." + (realMonth+1) + "." + realYear).toString();
+                String str = (realDay + "." + (realMonth + 1) + "." + realYear).toString();
                 Intent i = new Intent(MainActivity.this, Week.class);
                 i.putExtra("from calendarOneDay to week ", str);
                 startActivityForResult(i, 0);
@@ -119,14 +118,5 @@ public class MainActivity extends AppCompatActivity {
         calendar.setOnClickListener(listenerToCalendar); // показывает календарь премещает в calendar one day
         today.setOnClickListener(listenerToToday); //перемещает в today
 
-    };
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == 0 & requestCode == 0) {
-//            String str = data.getStringExtra("result");
-////            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    }
 }

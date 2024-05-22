@@ -83,8 +83,6 @@ public class CalendarOneDay extends AppCompatActivity {
         today_cal_one_day.setOnClickListener(listenerToToday); // перемещает между первой и today активностью
         calendar_cal_one_day.setOnClickListener(listenerToCalendar); //показывает календарь и перемещает в активность calrndar_one_day
 
-// а теперь разборки с сождержимым
-
 
     }
 }
